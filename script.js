@@ -102,10 +102,16 @@
       reservation.order_details = orderDetails;
       console.log(reservation);
 
+      GM_log("reservation data : " + reservation);
+      GM_log("Make an ajax request to send reservation to hook")
+
       // make a ajax request to save reservation data
       $.ajax({
-        //url: 'https://jinshuju.net/api/v1/forms/VaVmnO',
-        url: "https://xsjd.df1228.now.sh/import",
+        // url: 'https://jinshuju.net/api/v1/forms/VaVmnO',
+        // url: "https://xsjd.df1228.now.sh/import",
+        // url: "https://requestbin.df1228.now.sh/post",
+        // url: "https://hook.io/df1228/import_jd_orders",
+        url: "https://en52v9dw7pw0iy3.m.pipedream.net",
         type: "POST",
         dataType: "json",
         tryCount: 0,
@@ -237,7 +243,7 @@ async function allTasks() {
 function task1() {
   return new Promise(resolve => {
     setTimeout(() => {
-      GM_log("1", "我是第一个任务，必须第一个执行");
+      GM_log("1", "第一个任务: 自动选择机构");
       $("#organizations")
         .val($("#organizations option:eq(1)").val())
         .trigger("change");
@@ -249,7 +255,7 @@ function task1() {
 function task2() {
   return new Promise(resolve => {
     setTimeout(() => {
-      console.log("2", "第二个任务");
+      GM_log("2", "第二个任务: 自动选择配送中心");
       $("#distributionCentres")
         .val($("#distributionCentres option:eq(1)").val())
         .trigger("change");
@@ -261,7 +267,7 @@ function task2() {
 function task3() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log("3", "第三个任务");
+      GM_log("3", "第三个任务: 自动选择仓库");
       $("#warehouses")
         .val($("#warehouses option:eq(1)").val())
         .trigger("change");
@@ -278,19 +284,21 @@ function task4() {
     //   // $('#carriers').combobox("setValue","569972");
     //   resolve("done");
     // }, 1000);
+    GM_log("4", "第四个任务: 自动选择承运商");
     $.fn.combobox.defaults.onLoadSuccess = function (items) {
       if (items.length) {
         var opts = $(this).combobox('options');
         $(this).combobox('select', items[0][opts.valueField]);
       }
     }
+    resolve("done")
   });
 }
 
 function task5() {
   return new Promise(resolve => {
     setTimeout(() => {
-      console.log("5", "第五个任务");
+      GM_log("5", "第五个任务: 自动点击查询按钮");
       $("#query").click();
       resolve("done");
     }, 1000);
