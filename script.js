@@ -10,8 +10,8 @@
 // @grant        GM_notification
 // @grant        GM_log
 // @grant        GM_addStyle
-// @updateURL    https://gist.githubusercontent.com/dfang/6357bfbd387570a19e1d4643e6b8c1ec/raw/jd.user.js
-// @downloadURL  https://gist.githubusercontent.com/dfang/6357bfbd387570a19e1d4643e6b8c1ec/raw/jd.user.js
+// @updateURL    https://raw.githubusercontent.com/dfang/userscript/master/script.js
+// @downloadURL  https://raw.githubusercontent.com/dfang/userscript/master/script.js
 // ==/UserScript==
 
 (function () {
