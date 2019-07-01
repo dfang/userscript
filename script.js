@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name         京东大家电
 // @namespace    http://tampermonkey.net/
-// @version      0.5.0
+// @version      0.5.1
 // @homepage     https://github.com/dfang/userscript
+// @homepageURL  https://gist.github.com/dfang/6357bfbd387570a19e1d4643e6b8c1ec
 // @description  try to make partner.dhc.jd.com more user friendly! 京东大家电----订单一键导出
 // @author       fang duan
 // @include      *partner.dhc.jd.com*
@@ -10,8 +11,9 @@
 // @grant        GM_notification
 // @grant        GM_log
 // @grant        GM_addStyle
-// @updateURL    https://raw.githubusercontent.com/dfang/userscript/master/script.js
-// @downloadURL  https://raw.githubusercontent.com/dfang/userscript/master/script.js
+// @run-at       document-end
+// @updateURL    https://gist.githubusercontent.com/dfang/6357bfbd387570a19e1d4643e6b8c1ec/raw/jd.user.js
+// @downloadURL  https://gist.githubusercontent.com/dfang/6357bfbd387570a19e1d4643e6b8c1ec/raw/jd.user.js
 // ==/UserScript==
 
 (function () {
@@ -59,6 +61,8 @@
       var payment = null;
 
       reservation = new Object({
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
         order_no: $("#cyq1").text(),
         customer_address: $("#cyq6").val(),
         customer_name: $("#cyq2").val(),
@@ -81,6 +85,8 @@
       );
       $orderDetailsTRS.map(function (i, e) {
         var orderLine = new Object({
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
           order_no: reservation.order_no,
           product_no: $(e)
             .find("td:eq(1)")
@@ -166,7 +172,6 @@
     });
   }
 
-
   GM_log("end hacking");
 
 })();
@@ -187,6 +192,14 @@ function init1() {
 function init2() {
 
   addStyles()
+
+  // auto select first item when combobox loaded
+  $.fn.combobox.defaults.onLoadSuccess = function (items) {
+    if (items.length) {
+      var opts = $(this).combobox('options');
+      $(this).combobox('select', items[0][opts.valueField]);
+    }
+  }
 
   // auto select carrier and click query button after change warehouse
   $(document).on("change", "#warehouses", function () {
